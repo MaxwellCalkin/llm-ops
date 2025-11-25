@@ -5,6 +5,10 @@ WORKFLOW_FILES = {
     "explain": "explain.md",
     "code-review": "code-review.md",
     "ask": "ask.md",
+    "explore": "explore.md",
+    "red": "red.md",
+    "green": "green.md",
+    "refactor": "refactor.md",
     "uncle-bob": "uncle-bob.md"
 }
 
