@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-ops"
+version = "0.1.0"
+description = "CLI to install global AI agent workflows for Windsurf and Augment."
+readme = "README.md"
+authors = [
+  { name = "User" },
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+llm-ops = "llm_ops.main:main"
+
+[tool.setuptools.packages.find]
+include = ["llm_ops*"]
