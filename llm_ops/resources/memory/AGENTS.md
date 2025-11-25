@@ -2,7 +2,7 @@
 
 ## 1. Code Style & Philosophy
 * **Philosophy:** Uncle Bob's "Clean Code" & Kent Beck's "Tidy First".
-* **Expectations:** Small functions, clear naming, high test coverage.
+* **Expectations:** Small functions, clear naming, DRY, high test coverage, etc.
 
 ## 2. Project Memory (AGENTS.md)
 You are responsible for maintaining your own context and history in this file (`AGENTS.md`) at the root of the project.

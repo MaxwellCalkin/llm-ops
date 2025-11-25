@@ -31,7 +31,7 @@ def install_augment():
                 final_content = raw_content
         else:
             # Fallback if no frontmatter (shouldn't happen)
-            final_content = f"---\nmodel: default\n---\n{raw_content}"
+            final_content = f"---\nDescription: This rule helps the coding agent maintain a short-term memory of the activity in the current project.\nmodel: default\n---\n{raw_content}"
         
         # Augment uses the filename as the command trigger (e.g. /explain)
         dest = commands_dir / filename
@@ -39,12 +39,13 @@ def install_augment():
         print(f"   ⚡ Installed command: /{command} -> {dest}")
 
     # 3. Write Memory File (AGENTS.md)
-    # Augment looks for AGENTS.md in the workspace, but we can stage a global copy
+    # Augment looks for AGENTS.md in the workspace, but we can stage a global rule for this
     memory_content = get_resource_content("memory", "AGENTS.md")
-    (base_dir / "AGENTS.md").write_text(memory_content, encoding="utf-8")
+    rules_dir = base_dir / "rules"
+    rules_dir.mkdir(parents=True, exist_ok=True)
+    (rules_dir / "short-term-memory.md").write_text(memory_content, encoding="utf-8")
 
-    print(f"   🧠 Installed memory template: ~/.augment/AGENTS.md")
-    print("   ℹ️  Note: Copy ~/.augment/AGENTS.md to your project root to activate memory.")
+    print(f"   🧠 Installed memory template: ~/.augment/rules/short-term-memory.md")    
     print("\n🚀 Augment installed. Try typing '/uncle-bob' in your Augment chat.")
 
 def uninstall_augment():
