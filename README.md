@@ -41,7 +41,18 @@ When developing locally, `uv tool install .` creates a snapshot of your code. To
 uv run python -m llm_ops.main install antigravity
 ```
 
-If you want to update the global `llm-ops` command with your latest local changes:
+If you want to update the global `llm-ops` command with your latest local changes, use the reload command from your source directory:
+
+```bash
+# From your llm-ops source directory
+# Clean, rebuild, and reinstall in one step
+uv run python -m llm_ops.main reload
+
+# Then apply your changes
+llm-ops install antigravity
+```
+
+Alternatively, you can manually rebuild and reinstall:
 
 ```bash
 uv tool install --force .

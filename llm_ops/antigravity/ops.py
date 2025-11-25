@@ -13,8 +13,8 @@ def install_antigravity():
     # 2. Write Workflows (Raw Markdown)
     for command, filename in WORKFLOW_FILES.items():
         content = get_resource_content("workflows", filename)
-        # Prepend specific description for Antigravity
-        final_content = f"Description: {command} workflow.\n{content}"
+        # Content already has frontmatter
+        final_content = content
         
         dest = workflows_dir / filename
         dest.write_text(final_content, encoding="utf-8")

@@ -14,14 +14,24 @@ def install_augment():
     for command, filename in WORKFLOW_FILES.items():
         raw_content = get_resource_content("workflows", filename)
         
-        # Augment requires Frontmatter
-        frontmatter = f"""---
-description: Run the {command} workflow
-model: default
----
-
-"""
-        final_content = frontmatter + raw_content
+        # Augment requires 'model: default' in the frontmatter
+        # We inject it into the existing frontmatter
+        if raw_content.startswith("---"):
+            # Find the end of the frontmatter
+            end_index = raw_content.find("---", 3)
+            if end_index != -1:
+                # Insert model: default before the closing ---
+                final_content = (
+                    raw_content[:end_index]
+                    + "model: default\n"
+                    + raw_content[end_index:]
+                )
+            else:
+                # Fallback if no closing --- found (shouldn't happen with valid files)
+                final_content = raw_content
+        else:
+            # Fallback if no frontmatter (shouldn't happen)
+            final_content = f"---\nmodel: default\n---\n{raw_content}"
         
         # Augment uses the filename as the command trigger (e.g. /explain)
         dest = commands_dir / filename
