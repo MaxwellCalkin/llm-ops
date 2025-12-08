@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 from llm_ops.antigravity.ops import install_antigravity, uninstall_antigravity
 from llm_ops.augment.ops import install_augment, uninstall_augment
+from llm_ops.continue_agent.ops import install_continue, uninstall_continue
 
 def reload_package():
     """Rebuild and reinstall the llm-ops package for development."""
@@ -81,15 +82,15 @@ def main():
     install_parser = subparsers.add_parser("install", help="Install components")
     install_parser.add_argument(
         "component", 
-        choices=["antigravity", "augment"], 
-        help="Component to install (antigravity for Windsurf, augment for Augment Code)"
+        choices=["antigravity", "augment", "continue"], 
+        help="Component to install (antigravity, augment, or continue)"
     )
 
     # Uninstall command
     uninstall_parser = subparsers.add_parser("uninstall", help="Uninstall components")
     uninstall_parser.add_argument(
         "component", 
-        choices=["antigravity", "augment"], 
+        choices=["antigravity", "augment", "continue"], 
         help="Component to uninstall"
     )
 
@@ -103,11 +104,15 @@ def main():
             install_antigravity()
         elif args.component == "augment":
             install_augment()
+        elif args.component == "continue":
+            install_continue()
     elif args.command == "uninstall":
         if args.component == "antigravity":
             uninstall_antigravity()
         elif args.component == "augment":
             uninstall_augment()
+        elif args.component == "continue":
+            uninstall_continue()
     elif args.command == "reload":
         reload_package()
     else:

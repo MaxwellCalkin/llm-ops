@@ -38,14 +38,17 @@ def install_augment():
         dest.write_text(final_content, encoding="utf-8")
         print(f"   ⚡ Installed command: /{command} -> {dest}")
 
-    # 3. Write Memory File (AGENTS.md)
-    # Augment looks for AGENTS.md in the workspace, but we can stage a global rule for this
-    memory_content = get_resource_content("memory", "AGENTS.md")
+    # 3. Write Rules (Clean Code & Memory)
     rules_dir = base_dir / "rules"
     rules_dir.mkdir(parents=True, exist_ok=True)
-    (rules_dir / "short-term-memory.md").write_text(memory_content, encoding="utf-8")
 
-    print(f"   🧠 Installed memory template: ~/.augment/rules/short-term-memory.md")    
+    clean_code = get_resource_content("rules", "clean-code.md")
+    memory = get_resource_content("rules", "memory.md")
+
+    (rules_dir / "clean-code.md").write_text(clean_code, encoding="utf-8")
+    (rules_dir / "memory.md").write_text(memory, encoding="utf-8")
+
+    print(f"   🧠 Installed rules: ~/.augment/rules/clean-code.md & memory.md")    
     print("\n🚀 Augment installed. Try typing '/uncle-bob' in your Augment chat.")
 
 def uninstall_augment():
@@ -69,10 +72,18 @@ def uninstall_augment():
         except OSError:
             pass # Directory not empty
 
-    # 3. Remove Memory File
-    memory_file = base_dir / "AGENTS.md"
-    if memory_file.exists():
-        memory_file.unlink()
-        print(f"   🗑️  Removed memory: ~/.augment/AGENTS.md")
+    # 3. Remove Rules
+    rules_dir = base_dir / "rules"
+    if rules_dir.exists():
+        for rule in ["clean-code.md", "memory.md", "short-term-memory.md"]:
+            rule_path = rules_dir / rule
+            if rule_path.exists():
+                rule_path.unlink()
+                print(f"   🗑️  Removed rule: {rule}")
+        
+        try:
+            rules_dir.rmdir()
+        except OSError:
+            pass
 
     print("\n✨ Augment uninstalled.")

@@ -20,11 +20,16 @@ def install_antigravity():
         dest.write_text(final_content, encoding="utf-8")
         print(f"   ✨ Installed workflow: {filename}")
 
-    # 3. Write Memory File
-    memory_content = get_resource_content("memory", "GEMINI.md")
-    (base_dir / "GEMINI.md").write_text(memory_content, encoding="utf-8")
+    # 3. Write Memory File (Consolidated Rules)
+    clean_code = get_resource_content("rules", "clean-code.md")
+    memory = get_resource_content("rules", "memory.md")
     
-    print(f"   🧠 Installed memory: ~/.gemini/GEMINI.md")
+    # Combine them into one GEMINI.md
+    combined_content = f"{clean_code}\n\n{memory}"
+    
+    (base_dir / "GEMINI.md").write_text(combined_content, encoding="utf-8")
+    
+    print(f"   🧠 Installed memory: ~/.gemini/GEMINI.md (Consolidated)")
     print("\n🚀 Antigravity installed. Point Antigravity to ~/.gemini/antigravity/global_workflows/")
 
 def uninstall_antigravity():
